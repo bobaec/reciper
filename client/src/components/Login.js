@@ -24,8 +24,12 @@ const Login = ({ setAuth }) => {
                 body: JSON.stringify(body),
             });
             const parseResponse = await response.json();
-            localStorage.setItem("token", parseResponse.token);
-            setAuth(true);
+            if (parseResponse.token) {
+                localStorage.setItem("token", parseResponse.token);
+                setAuth(true);
+            } else {
+                setAuth(false);
+            }
         } catch (error) {
             console.log("onSubmitForm Login", error.message);
         }

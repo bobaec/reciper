@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import "./App.css";
+import Homepage from "./pages/Homepage";
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -34,50 +35,46 @@ function App() {
     return (
         <div className="website-container">
             <Router>
-                <div className="container">
-                    <Routes>
-                        <Route
-                            exact
-                            path="/login"
-                            element={
-                                !isAuthenticated ? (
-                                    <Login
-                                        setAuth={(e) => setIsAuthenticated(e)}
-                                    />
-                                ) : (
-                                    <Navigate to="/dashboard" />
-                                )
-                            }
-                        />
-                        <Route
-                            exact
-                            path="/register"
-                            element={
-                                !isAuthenticated ? (
-                                    <Register
-                                        setAuth={(e) => setIsAuthenticated(e)}
-                                    />
-                                ) : (
-                                    <Navigate to="/login" />
-                                )
-                            }
-                        />
-                        z
-                        <Route
-                            exact
-                            path="/dashboard"
-                            element={
-                                isAuthenticated ? (
-                                    <Dashboard
-                                        setAuth={(e) => setIsAuthenticated(e)}
-                                    />
-                                ) : (
-                                    <Navigate to="/login" />
-                                )
-                            }
-                        />
-                    </Routes>
-                </div>
+                <Routes>
+                    <Route exact path="/" element={<Homepage />} />
+                    <Route
+                        exact
+                        path="/login"
+                        element={
+                            !isAuthenticated ? (
+                                <Login setAuth={(e) => setIsAuthenticated(e)} />
+                            ) : (
+                                <Navigate to="/dashboard" />
+                            )
+                        }
+                    />
+                    <Route
+                        exact
+                        path="/register"
+                        element={
+                            !isAuthenticated ? (
+                                <Register
+                                    setAuth={(e) => setIsAuthenticated(e)}
+                                />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        exact
+                        path="/dashboard"
+                        element={
+                            isAuthenticated ? (
+                                <Dashboard
+                                    setAuth={(e) => setIsAuthenticated(e)}
+                                />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                </Routes>
             </Router>
         </div>
     );
