@@ -1,0 +1,26 @@
+const pantryEssentials = [
+    "butter",
+    "egg",
+    "milk",
+    "garlic",
+    "milk",
+    "onion",
+    "sugar",
+    "flour",
+    "olive oil",
+    "rice",
+    "soy sauce",
+    "mayonnaise",
+    "ketchup",
+    "vegetable oil",
+    "bread",
+    "honey",
+    "peanut butter",
+    "mustard",
+    "thyme",
+    "parsley",
+    "rosemary",
+    "oregano",
+];
+
+export { pantryEssentials };

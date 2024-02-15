@@ -1,0 +1,87 @@
+@mixin ingredient-box {
+    background-color: white;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.sidebar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 550px;
+    background-color: beige;
+    height: 100vh;
+    padding: 25px;
+    .sidebar-content-container {
+        .sidebar-title-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .sidebar-search-container {
+            display: flex;
+            position: relative;
+            .sidebar-search {
+                width: 100%;
+            }
+            .search-icon {
+                position: absolute;
+                top: 50%;
+                left: 10px;
+                transform: translateY(-50%);
+                color: gray;
+            }
+            input {
+                width: 100%;
+                padding: 10px 10px 10px 40px;
+                border-radius: 5px;
+                border: 1px solid gray;
+            }
+        }
+        .ingredients-help-text {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+            color: gray;
+        }
+        .ingredients-container {
+            margin-top: 20px;
+            .ingredients-title {
+                margin-bottom: 5px;
+            }
+            .ingredients {
+                display: flex;
+                flex-wrap: wrap;
+                margin-bottom: 5px;
+                .ingredient {
+                    @include ingredient-box;
+                }
+            }
+            .conditional-ingredient {
+                color: gray;
+                font-size: 14px;
+                text-align: center;
+                margin-top: 15px;
+            }
+        }
+        .pantry-essentials-container {
+            margin-top: 20px;
+            .pantry-essentials-title {
+                margin-bottom: 5px;
+            }
+            .pantry-essentials {
+                display: flex;
+                flex-wrap: wrap;
+                .essential {
+                    @include ingredient-box;
+                }
+            }
+        }
+    }
+    .auth-container {
+        cursor: pointer;
+    }
+}
