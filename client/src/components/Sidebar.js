@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faBars,
@@ -10,9 +10,14 @@ import "../styling/Sidebar.scss";
 import { Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 
-const Sidebar = () => {
+const Sidebar = ({ getRecipes }) => {
     const [currentIngredient, setCurrentIngredient] = useState("");
     const [allIngredients, setAllIngredients] = useState([]);
+
+    useEffect(() => {
+        getRecipes(allIngredients);
+    }, [allIngredients]);
+
     const onIngredientSubmit = (e) => {
         if (typeof e !== "string") {
             e.preventDefault();
