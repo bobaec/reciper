@@ -1,0 +1,34 @@
+.content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    width: -webkit-fill-available;
+    max-height: 100vh;
+    overflow-y: scroll;
+    background-color: #161616;
+    .content-title {
+        color: white;
+    }
+    .content-search-container {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        margin-top: 20px;
+        .content-search {
+            width: 100%;
+        }
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: gray;
+        }
+        input {
+            width: 100%;
+            padding: 10px 10px 10px 40px;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+    }
+}

@@ -7,7 +7,7 @@ import Content from "../components/Content";
 import "../styling/Homepage.scss";
 
 const Homepage = () => {
-    const [ingredients, setIngredients] = useState("");
+    const [ingredients, setIngredients] = useState([]);
     return (
         <div className="homepage-container">
             <Sidebar

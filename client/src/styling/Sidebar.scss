@@ -12,7 +12,7 @@
     flex-direction: column;
     justify-content: space-between;
     width: 550px;
-    background-color: beige;
+    background-color: #27282b;
     height: 100vh;
     padding: 25px;
     .sidebar-content-container {
@@ -20,6 +20,7 @@
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
+            color: white;
         }
         .sidebar-search-container {
             display: flex;
@@ -50,6 +51,7 @@
         .ingredients-container {
             margin-top: 20px;
             .ingredients-title {
+                color: white;
                 margin-bottom: 5px;
             }
             .ingredients {
@@ -70,6 +72,7 @@
         .pantry-essentials-container {
             margin-top: 20px;
             .pantry-essentials-title {
+                color: white;
                 margin-bottom: 5px;
             }
             .pantry-essentials {

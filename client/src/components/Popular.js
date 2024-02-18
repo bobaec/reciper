@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import "../styling/Popular.scss";
+import missingImage from '../assets/images/missing.png';
 
 const Popular = () => {
     const [popular, setPopular] = useState([]);
@@ -14,13 +16,22 @@ const Popular = () => {
     }, []);
     console.log(popular);
     return (
-        <div>
-            <h1>Popular</h1>
-            <div className="popular-recipes-container">
+        <div className="popular-recipes-container">
+            <div className="popular-recipes-title">Popular</div>
+            <div className="popular-recipes">
                 {popular.map((recipe, index) => {
                     return (
-                        <div key={index}>
-                            <p>{recipe.title}</p>
+                        <div className="popular-recipe" key={index}>
+                            <img
+                                className="popular-recipe-image"
+                                src={recipe.image || missingImage}
+                                alt={recipe.summary}
+                            />
+                            <div className="popular-recipe-info-container">
+                                <a href={recipe.sourceUrl}>{recipe.title.replace(/\b\w/g, (char) => char.toUpperCase())}</a>
+                                <div>{recipe.sourceName}</div>
+                                <div className="">You have x ingredients</div>
+                            </div>
                         </div>
                     );
                 })}
