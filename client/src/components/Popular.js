@@ -14,7 +14,6 @@ const Popular = () => {
         };
         getPopular();
     }, []);
-    console.log(popular);
     return (
         <div className="popular-recipes-container">
             <div className="popular-recipes-title">Popular</div>
