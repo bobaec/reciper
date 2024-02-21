@@ -18,18 +18,20 @@ const Sidebar = ({ getRecipes }) => {
         getRecipes(allIngredients);
     }, [allIngredients]);
 
-    const onIngredientSubmit = (e) => {
-        if (typeof e !== "string") {
-            e.preventDefault();
-        }
-        if (!allIngredients.includes(e)) {
+    const onIngredientFormSubmit = (e) => {
+        e.preventDefault();
+        addIngredientToPantry(currentIngredient);
+    }
+
+    const addIngredientToPantry = (ingredient) => {
+        if (!allIngredients.includes(ingredient)) {
             setAllIngredients((prevIngredients) => [
                 ...prevIngredients,
-                currentIngredient || e,
+                currentIngredient || ingredient,
             ]);
         }
         setCurrentIngredient("");
-    };
+    }
     const removeIngredient = (ingredientToRemove) => {
         console.log(ingredientToRemove);
         const modifyAllIngredients = allIngredients.filter(
@@ -50,7 +52,7 @@ const Sidebar = ({ getRecipes }) => {
                 <div className="sidebar-search-container">
                     <form
                         className="sidebar-search"
-                        onSubmit={(e) => onIngredientSubmit(e)}
+                        onSubmit={(e) => onIngredientFormSubmit(e)}
                     >
                         <FontAwesomeIcon
                             className="search-icon"
@@ -109,7 +111,7 @@ const Sidebar = ({ getRecipes }) => {
                                     className="essential"
                                     key={index}
                                     onClick={() =>
-                                        onIngredientSubmit(essential)
+                                        addIngredientToPantry(essential)
                                     }
                                 >
                                     {essential}

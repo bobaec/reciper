@@ -15,19 +15,43 @@
             margin-right: 10px;
             border: 1px solid gray;
             border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;            
             background-color: #27282b;
             color: white;
             img {
                 height: 200px;
-                border-top-left-radius: 10px;
-                border-top-right-radius: 10px;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
                 object-fit: none;
             }
             .popular-recipe-info-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
                 padding: 5px 10px;
+                height: -webkit-fill-available;
+                .popular-recipe-title-and-where {
+                    display: flex;
+                    flex-direction: column;
+                } 
                 a {
                     color: antiquewhite;
+                }
+                .recipe-vegan,
+                .recipe-popular,
+                .recipe-healthy {
+                    background-color: white;
+                    margin: 5px 0;
+                    padding: 8px;
+                    border-radius: 5px;
+                    width: fit-content;
+                    color: black;
+                }
+                .recipe-vegan {
+                    background-color: green;
+                }
+                .recipe-popular {
+                    background-color: red;
                 }
             }
         }
