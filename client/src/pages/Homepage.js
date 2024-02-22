@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Popular from "../components/Popular";
+import Popular from "../components/Recipes";
 import Veggie from "../components/Veggie";
 import Sidebar from "../components/Sidebar";
 import Content from "../components/Content";

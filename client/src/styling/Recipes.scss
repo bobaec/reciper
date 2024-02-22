@@ -1,13 +1,13 @@
-.popular-recipes-container {
+.recipes-container {
     display: flex;
     flex-direction: column;
-    .popular-recipes-title {
+    .recipes-title {
         margin: 20px 0;
     }
-    .popular-recipes {
+    .recipes {
         display: flex;
         flex-wrap: wrap;
-        .popular-recipe {
+        .recipe {
             display: flex;
             flex-direction: column;
             flex: 1 0 30%;
@@ -22,40 +22,24 @@
                 height: 200px;
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
-                object-fit: none;
+                object-fit: cover;
             }
-            .popular-recipe-info-container {
+            .recipe-info-container {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 padding: 5px 10px;
                 height: -webkit-fill-available;
-                .popular-recipe-title-and-where {
+                .recipe-title-and-where {
                     display: flex;
                     flex-direction: column;
                 } 
                 a {
                     color: antiquewhite;
                 }
-                .recipe-vegan,
-                .recipe-popular,
-                .recipe-healthy {
-                    background-color: white;
-                    margin: 5px 0;
-                    padding: 8px;
-                    border-radius: 5px;
-                    width: fit-content;
-                    color: black;
-                }
-                .recipe-vegan {
-                    background-color: green;
-                }
-                .recipe-popular {
-                    background-color: red;
-                }
             }
         }
-        .popular-recipe:hover {
+        .recipe:hover {
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
         }
     }
