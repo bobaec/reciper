@@ -10,13 +10,12 @@ import "../styling/Sidebar.scss";
 import { Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 
-const Sidebar = ({ getRecipes }) => {
+const Sidebar = ({ saveIngredients, ingredients }) => {
     const [currentIngredient, setCurrentIngredient] = useState("");
-    const [allIngredients, setAllIngredients] = useState([]);
 
-    useEffect(() => {
-        getRecipes(allIngredients);
-    }, [allIngredients]);
+    // useEffect(() => {
+    //     getRecipes(allIngredients);
+    // }, [allIngredients]);
 
     const onIngredientFormSubmit = (e) => {
         e.preventDefault();
@@ -24,20 +23,18 @@ const Sidebar = ({ getRecipes }) => {
     }
 
     const addIngredientToPantry = (ingredient) => {
-        if (!allIngredients.includes(ingredient)) {
-            setAllIngredients((prevIngredients) => [
-                ...prevIngredients,
-                currentIngredient || ingredient,
-            ]);
+        if (!ingredients.includes(ingredient)) {
+            ingredients.push(ingredient);
+            saveIngredients(ingredients);
         }
         setCurrentIngredient("");
     }
-    const removeIngredient = (ingredientToRemove) => {
-        console.log(ingredientToRemove);
-        const modifyAllIngredients = allIngredients.filter(
-            (ingredient) => ingredient !== ingredientToRemove
+    const removeIngredientFromPantry = (ingredientToRemove) => {
+        const modifyAllIngredients = ingredients.filter(
+            (ingredient) => ingredient !== ingredientToRemove && ingredient !== ''
         );
-        setAllIngredients(modifyAllIngredients);
+        saveIngredients(modifyAllIngredients);
+        setCurrentIngredient("");
     };
 
     return (
@@ -60,7 +57,7 @@ const Sidebar = ({ getRecipes }) => {
                         />
                         <input
                             type="text"
-                            placeholder="Enter an ingredient"
+                            placeholder="Enter an ingredient..."
                             onChange={(e) =>
                                 setCurrentIngredient(e.target.value)
                             }
@@ -73,19 +70,19 @@ const Sidebar = ({ getRecipes }) => {
                 </div>
                 <div className="ingredients-container">
                     <div className="ingredients-title">Your Pantry</div>
-                    {allIngredients.length === 0 ? (
+                    {ingredients.length === 0 ? (
                         <div className="conditional-ingredient">
                             Enter an ingredient above or click an ingredient
                             below and it will show here
                         </div>
                     ) : null}
                     <div className="ingredients">
-                        {allIngredients.map((ingredient, index) => {
+                        {ingredients.map((ingredient, index) => {
                             return (
                                 <div
                                     className="ingredient"
                                     key={index}
-                                    onClick={() => removeIngredient(ingredient)}
+                                    onClick={() => removeIngredientFromPantry(ingredient)}
                                 >
                                     {ingredient}
                                 </div>

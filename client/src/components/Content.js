@@ -18,17 +18,14 @@ const Content = ({ ingredients }) => {
                     );
                     const parseResponse = await response.json();
                     setRecipes(parseResponse);
-                    console.log(parseResponse);
                 } catch (error) {
                     console.log("getRecipesByIngredients", error.message);
                 }
+            } else {
+                await getRandom();
             }
         }, 1000);
 
-        return () => clearTimeout(getRecipesByIngredients);
-    }, [ingredients]);
-
-    useEffect(() => {
         const getRandom = async () => {
             try {
                 const response = await fetch(
@@ -40,26 +37,44 @@ const Content = ({ ingredients }) => {
                 console.log('getRandom', error.message);
             }
         };
-        getRandom();
+        return () => clearTimeout(getRecipesByIngredients);
     }, [ingredients]);
 
-    const onSearchSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const stringifyIngredients = ingredients.join(",+");
-            const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&query=${searchText}&addRecipeInformation=true&addRecipeNutrition=true&includeIngredients=${stringifyIngredients}&fillIngredients=true`);
-            const parseResponse = await response.json();
-            const results = parseResponse.results;
-            setRecipes(results);
-            console.log(results);
-        } catch (error) {
-            console.log('onSearchSubmit', error.message);
-        }
-    }
+    // useEffect(() => {
+    //     const getRandom = async () => {
+    //         try {
+    //             const response = await fetch(
+    //                 `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=9`
+    //             );
+    //             const parseResponse = await response.json();
+    //             setRecipes(parseResponse.recipes);
+    //         } catch (error) {
+    //             console.log('getRandom', error.message);
+    //         }
+    //     };
+    //     if (!ingredients.length) {
+    //         getRandom();
+    //     }
+    // }, [ingredients]);
+
+    // const onSearchSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const stringifyIngredients = ingredients.join(",+");
+    //         const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&query=${searchText}&addRecipeInformation=true&addRecipeNutrition=true&includeIngredients=${stringifyIngredients}&fillIngredients=true`);
+    //         const parseResponse = await response.json();
+    //         const results = parseResponse.results;
+    //         setRecipes(results);
+    //         console.log(results);
+    //     } catch (error) {
+    //         console.log('onSearchSubmit', error.message);
+    //     }
+    // }
+
     return (
         <div className="content-container">
             <div className="content-title">Recipes</div>
-            <div className="content-search-container">
+            {/* <div className="content-search-container">
                 <form
                     className="content-search"
                     onSubmit={(e) => onSearchSubmit(e)}
@@ -72,7 +87,7 @@ const Content = ({ ingredients }) => {
                         value={searchText}
                     />
                 </form>
-            </div>
+            </div> */}
             <Recipes recipes={recipes}/>
         </div>
     );

@@ -1,0 +1,26 @@
+@mixin ingredient-box {
+    padding: 5px;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+    margin: 5px;
+    width: fit-content;
+}
+.modal-container .modal-content {
+    background-color: #27282b;
+    color: white;
+    a {
+        color: antiquewhite;
+    }
+    .number-of-ingredients {
+        margin: 10px 0;
+    }
+    .ingredients-container, .cuisines-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        .used-ingredient, .missed-ingredient, .cuisine {
+            @include ingredient-box;
+        }
+    }
+}

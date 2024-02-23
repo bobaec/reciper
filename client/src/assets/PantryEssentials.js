@@ -3,7 +3,6 @@ const pantryEssentials = [
     "egg",
     "milk",
     "garlic",
-    "milk",
     "onion",
     "sugar",
     "flour",

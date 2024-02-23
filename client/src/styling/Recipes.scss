@@ -7,19 +7,22 @@
     .recipes {
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-between;
         .recipe {
             display: flex;
             flex-direction: column;
-            flex: 1 0 30%;
+            flex: 0 0 32%;
             margin-bottom: 20px;
-            margin-right: 10px;
+            // margin-left: 5px;
+            // margin-right: 5px;
             border: 1px solid gray;
             border-radius: 10px;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;            
             background-color: #27282b;
             color: white;
+            cursor: pointer;
+            width: 200px;
             img {
-                height: 200px;
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
                 object-fit: cover;
@@ -37,10 +40,20 @@
                 a {
                     color: antiquewhite;
                 }
+                .recipe-icon-container {
+                    display: flex;
+                    .recipe-used-ingredients, .recipe-missed-ingredients {
+                        margin-right: 10px;
+                    }
+                }
             }
         }
         .recipe:hover {
             box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+        .recipe::after {
+            content: "";
+            flex: 100;
         }
     }
 }
