@@ -1,73 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Popular from "../components/Recipes";
-import Veggie from "../components/Veggie";
 import Sidebar from "../components/Sidebar";
 import Content from "../components/Content";
 import "../styling/Homepage.scss";
+import LoginModal from "../components/Modals/LoginModal";
+import LogoutModal from "../components/Modals/LogoutModal";
 
-const Homepage = () => {
+const Homepage = ({ setAuth, isAuthenticated }) => { //rename
     const [ingredients, setIngredients] = useState([]);
     const [ownedIngredients, setOwnedIngredients] = useState([]);
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [authenticated, setAuthenticated] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-    const getAuth = async () => {
+    useEffect(() => {
+        setAuthenticated(isAuthenticated);
+    }, [isAuthenticated])
+
+    useEffect(() => {
+        getIngredients();
+    }, [])
+
+    useEffect(() => {
+        console.log('here')
+    }, [ingredients])
+
+    const getIngredients = async () => {
         try {
-            const response = await fetch("http://localhost:5000/auth/verify/", {
+            const response = await fetch('http://localhost:5000/recipes/get-ingredients', {
                 method: "GET",
                 headers: {
                     token: localStorage.token,
                 },
             });
             const parseResponse = await response.json();
-            setLoggedIn(parseResponse);
-        } catch (error) {
-            console.log('getAuth', error.message);
-        }
-    }
-
-    const getIngredients = async () => {
-        try {
-            if (loggedIn) {
-                const response = await fetch('http://localhost:5000/recipes/get-ingredients', {
-                    method: "GET",
-                    headers: {
-                        token: localStorage.token,
-                    },
-                });
-                const parseResponse = await response.json();
+            if (parseResponse.owned_ingredients) {
                 const splitIngredients = await parseResponse.owned_ingredients.split(',+');
                 setIngredients(splitIngredients);
             }
+
         } catch (error) {
             console.log('getIngredients', error.message);
         }
     }
 
-    useEffect(() => {
-        getAuth();
-        getIngredients();
-    }, [])
-
     const saveIngredients = async (allIngredients) => {
-        setIngredients(allIngredients);
+        // setIngredients(allIngredients);
         const filterOwnedIngredients = {
             owned_ingredients: allIngredients.length > 0 ? allIngredients.join(',+') : null
         }
         setOwnedIngredients(filterOwnedIngredients);
         try {
-            if (loggedIn) {
-                const response = await fetch('http://localhost:5000/recipes/save-ingredients', {
+            if (authenticated) {
+                await fetch('http://localhost:5000/recipes/save-ingredients', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                         token: localStorage.token,
                     },
-                    body: JSON.stringify(ownedIngredients),
+                    body: JSON.stringify(filterOwnedIngredients),
                 });
             }
             setIngredients(allIngredients);
-            if (loggedIn) {
+            if (authenticated) {
                 await getIngredients();
             }
         } catch (error) {
@@ -77,12 +71,16 @@ const Homepage = () => {
 
     return (
         <div className="homepage-container">
-            {/* {console.log(ingredients)} */}
             <Sidebar
                 saveIngredients={(allIngredients) => saveIngredients(allIngredients)}
                 ingredients={ingredients}
+                isAuthenticated={authenticated}
+                setShowLoginModal={(e) => setShowLoginModal(e)}
+                setShowLogoutModal={(e) => setShowLogoutModal(e)}
             />
-            {/* <Content ingredients={ingredients} /> */}
+            <Content ingredients={ingredients} />
+            {showLoginModal ? <LoginModal show={showLoginModal} setAuth={setAuth} setShowLoginModal={(e) => setShowLoginModal(e)} /> : null}
+            {showLogoutModal ? <LogoutModal show={showLogoutModal} setAuth={setAuth} setShowLogoutModal={(e) => setShowLogoutModal(e)} /> : null}
         </div>
     );
 };

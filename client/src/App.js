@@ -36,7 +36,7 @@ function App() {
         <div className="website-container">
             <Router>
                 <Routes>
-                    <Route exact path="/" element={<Homepage />} />
+                    <Route exact path="/" element={<Homepage setAuth={(e) => setIsAuthenticated(e)} isAuthenticated={isAuthenticated} />} />
                     <Route
                         exact
                         path="/login"

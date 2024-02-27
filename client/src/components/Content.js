@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../styling/Content.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Recipes from "./Recipes";
 
 const Content = ({ ingredients }) => {
     const [recipes, setRecipes] = useState([]);
-    const [searchText, setSearchText] = useState("");
+    console.log(ingredients);
+    useEffect(() => {
+        console.log('a')
+    }, [ingredients])
 
     useEffect(() => {
         const getRecipesByIngredients = setTimeout(async () => {
@@ -43,20 +44,6 @@ const Content = ({ ingredients }) => {
     return (
         <div className="content-container">
             <div className="content-title">Recipes</div>
-            {/* <div className="content-search-container">
-                <form
-                    className="content-search"
-                    onSubmit={(e) => onSearchSubmit(e)}
-                >
-                    <FontAwesomeIcon className="search-icon" icon={faSearch} />
-                    <input
-                        type="text"
-                        placeholder="Find a recipe..."
-                        onChange={(e) => setSearchText(e.target.value)}
-                        value={searchText}
-                    />
-                </form>
-            </div> */}
             {recipes.length ? <Recipes recipes={recipes} ingredients={ingredients} /> : null}
         </div>
     );

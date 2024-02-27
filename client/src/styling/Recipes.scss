@@ -1,9 +1,6 @@
 .recipes-container {
     display: flex;
     flex-direction: column;
-    .recipes-title {
-        margin: 20px 0;
-    }
     .recipes {
         display: flex;
         flex-wrap: wrap;
@@ -13,8 +10,6 @@
             flex-direction: column;
             flex: 0 0 32%;
             margin-bottom: 20px;
-            // margin-left: 5px;
-            // margin-right: 5px;
             border: 1px solid gray;
             border-radius: 10px;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;            
@@ -42,6 +37,7 @@
                 }
                 .recipe-icon-container {
                     display: flex;
+                    margin-top: 5px;
                     .recipe-used-ingredients, .recipe-missed-ingredients {
                         margin-right: 10px;
                     }

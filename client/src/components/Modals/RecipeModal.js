@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import '../styling/RecipeModal.scss';
+import '../../styling/RecipeModal.scss';
 
 const RecipeModal = ({ show, setShow, recipe }) => {
 	const { image, summary, sourceUrl, title, id, likes, missedIngredients, usedIngredients } = recipe;
@@ -93,4 +93,4 @@ const RecipeModal = ({ show, setShow, recipe }) => {
 	)
 }
 
-export default RecipeModal
+export default RecipeModal;

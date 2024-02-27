@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styling/Recipes.scss";
 import missingImage from '../assets/images/missing.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,7 +7,7 @@ import {
     faFlag,
     faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import RecipeModal from "./RecipeModal";
+import RecipeModal from "./Modals/RecipeModal";
 
 const Recipes = ({ recipes, ingredients }) => {
     const [show, setShow] = useState(false);
@@ -18,7 +18,7 @@ const Recipes = ({ recipes, ingredients }) => {
     }
     return (
         <div className="recipes-container">
-            <div className="recipes-title">Random Recipes for Inspiration</div>
+            <div className="recipes-title" style={{ margin: ingredients.length ? '10px 0' : '20px 0' }}>{ingredients.length ? '' : 'Random Recipes for Inspiration'}</div>
             <div className="recipes">
                 {recipes?.length ? recipes.map((recipe, index) => {
                     const { image, summary, sourceUrl, title, likes, missedIngredients, usedIngredients } = recipe;

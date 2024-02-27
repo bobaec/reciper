@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
+
 const Login = ({ setAuth }) => {
     const [inputs, setInputs] = useState({
         email: "",

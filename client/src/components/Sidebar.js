@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faBars,
@@ -7,10 +7,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { pantryEssentials } from "../assets/PantryEssentials";
 import "../styling/Sidebar.scss";
-import { Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 
-const Sidebar = ({ saveIngredients, ingredients }) => {
+const Sidebar = ({ saveIngredients, ingredients, isAuthenticated, setShowLoginModal, setShowLogoutModal }) => {
     const [currentIngredient, setCurrentIngredient] = useState("");
 
     const onIngredientFormSubmit = (e) => {
@@ -21,8 +20,8 @@ const Sidebar = ({ saveIngredients, ingredients }) => {
     const addIngredientToPantry = (ingredient) => {
         setCurrentIngredient(ingredient);
         if (!ingredients.includes(ingredient)) {
-            ingredients.push(ingredient);
-            saveIngredients(ingredients);
+            const updatedIngredients = [...ingredients, ingredient];
+            saveIngredients(updatedIngredients);
         }
         setCurrentIngredient("");
     }
@@ -104,9 +103,7 @@ const Sidebar = ({ saveIngredients, ingredients }) => {
                                 <div
                                     className="essential"
                                     key={index}
-                                    onClick={() =>
-                                        addIngredientToPantry(essential)
-                                    }
+                                    onClick={() => addIngredientToPantry(essential)}
                                 >
                                     {essential}
                                 </div>
@@ -115,9 +112,12 @@ const Sidebar = ({ saveIngredients, ingredients }) => {
                     </div>
                 </div>
             </div>
-            <div className="auth-container">
-                <Link to="/login">Login</Link>
-            </div>
+            {!isAuthenticated ?
+                <div className="auth-container" onClick={() => setShowLoginModal(true)}>
+                    Login
+                </div> : <div className="auth-container" onClick={() => setShowLogoutModal(true)}>
+                    Logout
+                </div>}
         </div>
     );
 };
