@@ -40,37 +40,6 @@ const Content = ({ ingredients }) => {
         return () => clearTimeout(getRecipesByIngredients);
     }, [ingredients]);
 
-    // useEffect(() => {
-    //     const getRandom = async () => {
-    //         try {
-    //             const response = await fetch(
-    //                 `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=9`
-    //             );
-    //             const parseResponse = await response.json();
-    //             setRecipes(parseResponse.recipes);
-    //         } catch (error) {
-    //             console.log('getRandom', error.message);
-    //         }
-    //     };
-    //     if (!ingredients.length) {
-    //         getRandom();
-    //     }
-    // }, [ingredients]);
-
-    // const onSearchSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const stringifyIngredients = ingredients.join(",+");
-    //         const response = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&query=${searchText}&addRecipeInformation=true&addRecipeNutrition=true&includeIngredients=${stringifyIngredients}&fillIngredients=true`);
-    //         const parseResponse = await response.json();
-    //         const results = parseResponse.results;
-    //         setRecipes(results);
-    //         console.log(results);
-    //     } catch (error) {
-    //         console.log('onSearchSubmit', error.message);
-    //     }
-    // }
-
     return (
         <div className="content-container">
             <div className="content-title">Recipes</div>
@@ -88,7 +57,7 @@ const Content = ({ ingredients }) => {
                     />
                 </form>
             </div> */}
-            <Recipes recipes={recipes}/>
+            {recipes.length ? <Recipes recipes={recipes} ingredients={ingredients} /> : null}
         </div>
     );
 };

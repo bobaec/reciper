@@ -13,16 +13,13 @@ import Tooltip from "@mui/material/Tooltip";
 const Sidebar = ({ saveIngredients, ingredients }) => {
     const [currentIngredient, setCurrentIngredient] = useState("");
 
-    // useEffect(() => {
-    //     getRecipes(allIngredients);
-    // }, [allIngredients]);
-
     const onIngredientFormSubmit = (e) => {
         e.preventDefault();
         addIngredientToPantry(currentIngredient);
     }
 
     const addIngredientToPantry = (ingredient) => {
+        setCurrentIngredient(ingredient);
         if (!ingredients.includes(ingredient)) {
             ingredients.push(ingredient);
             saveIngredients(ingredients);

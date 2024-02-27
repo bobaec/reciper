@@ -7,12 +7,9 @@ import {
     faFlag,
     faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import RecipeModal from "./RecipeModal";
 
-const Recipes = ({ recipes }) => {
-    console.log('recipes.js', recipes);
+const Recipes = ({ recipes, ingredients }) => {
     const [show, setShow] = useState(false);
     const [currentRecipe, setCurrentRecipe] = useState({});
     const openRecipeModal = (recipe) => {
@@ -23,7 +20,7 @@ const Recipes = ({ recipes }) => {
         <div className="recipes-container">
             <div className="recipes-title">Random Recipes for Inspiration</div>
             <div className="recipes">
-                {recipes.length ? recipes.map((recipe, index) => {
+                {recipes?.length ? recipes.map((recipe, index) => {
                     const { image, summary, sourceUrl, title, likes, missedIngredients, usedIngredients } = recipe;
                     return (
                         <div className="recipe" key={index} onClick={() => openRecipeModal(recipe)}>
@@ -40,14 +37,14 @@ const Recipes = ({ recipes }) => {
                                     <div className="recipe-time">{recipe.readyInMinutes} mins</div> */}
                                 </div>
                                 <div className="recipe-icon-container">
-                                    <div className="recipe-used-ingredients">
-                                        <FontAwesomeIcon icon={faCheck} /> {usedIngredients.length}
-                                    </div>
-                                    <div className="recipe-missed-ingredients">
-                                        <FontAwesomeIcon icon={faFlag} /> {missedIngredients.length}
-                                    </div>
+                                    {ingredients?.length ? <div className="recipe-used-ingredients">
+                                        <FontAwesomeIcon icon={faCheck} /> {usedIngredients?.length}
+                                    </div> : null}
+                                    {ingredients?.length ? <div className="recipe-missed-ingredients">
+                                        <FontAwesomeIcon icon={faFlag} /> {missedIngredients?.length}
+                                    </div> : null}
                                     <div className="recipe-number-of-likes">
-                                        <FontAwesomeIcon icon={faHeart} /> {likes}
+                                        <FontAwesomeIcon icon={faHeart} /> {likes || recipe.aggregateLikes}
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +52,7 @@ const Recipes = ({ recipes }) => {
                     );
                 }) : <div>No recipes found.</div>}
             </div>
-            <RecipeModal show={show} setShow={setShow} recipe={currentRecipe} />
+            {currentRecipe?.id ? <RecipeModal show={show} setShow={setShow} recipe={currentRecipe} /> : null}
         </div>
     );
 };
