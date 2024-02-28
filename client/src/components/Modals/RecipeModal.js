@@ -23,7 +23,7 @@ const RecipeModal = ({ show, setShow, recipe }) => {
 		getRecipeInformation();
 	}, [])
 
-	const loggedIn = () => {
+	const hasIngredients = () => {
 		return missedIngredients?.length > 0 || usedIngredients?.length > 0;
 	}
 
@@ -45,39 +45,45 @@ const RecipeModal = ({ show, setShow, recipe }) => {
 				<Modal.Body>
 					<Container>
 						<Row>
-							<Col md={12}>
+							<Col className="recipe-summary" md={12}>
 								<div dangerouslySetInnerHTML={{ __html: recipeInformation.summary }} />
 							</Col>
-							{loggedIn() ? <>
+							{hasIngredients() ? <>
 								<Col className="number-of-ingredients" md={12}>
 									You have <b>{usedIngredients.length}</b> ingredients out of <b>{usedIngredients.length + missedIngredients.length}</b> total required ingredients.
 								</Col>
-								<Col md={12}>Owned Ingredients:</Col>
-								<Col className="ingredients-container" md={12}>
-									{usedIngredients.map((ingredient, index) => {
-										return (
-											<div className="used-ingredient" key={index}>{ingredient.name}</div>
-										)
-									})}
+								<Col className="owned-ingredients-container" md={12}>
+									<Col md={12}>Owned Ingredients:</Col>
+									<Col className="ingredients" md={12}>
+										{usedIngredients.map((ingredient, index) => {
+											return (
+												<div className="used-ingredient" key={index}>{ingredient.name}</div>
+											)
+										})}
+									</Col>
 								</Col>
-								<Col md={12}>Missed Ingredients:</Col>
 								<Col className="ingredients-container" md={12}>
-									{missedIngredients.map((ingredient, index) => {
-										return (
-											<div className="missed-ingredient" key={index}>{ingredient.name}</div>
-										)
-									})}
+									<Col md={12}>Missed Ingredients:</Col>
+									<Col className="ingredients" md={12}>
+										{missedIngredients.map((ingredient, index) => {
+											return (
+												<div className="missed-ingredient" key={index}>{ingredient.name}</div>
+											)
+										})}
+									</Col>
 								</Col>
 							</> : null}
-							<Col md={12}>Cuisine Type(s):</Col>
-							{recipeInformation?.dishTypes?.length ? <Col className="cuisines-container" md={12}>
-								{recipeInformation?.dishTypes.map((cuisine, index) => {
-									return (
-										<div className="cuisine" key={index}>{cuisine}</div>
-									)
-								})}
-							</Col> : null}
-							<Col md={12}>
+							<Col md={12} className="cuisines-container">
+								<Col md={12}>Cuisine Type(s):</Col>
+								{recipeInformation?.dishTypes?.length ? <Col className="cuisines" md={12}>
+									{recipeInformation?.dishTypes.map((cuisine, index) => {
+										return (
+											<div className="cuisine" key={index}>{cuisine}</div>
+										)
+									})}
+								</Col> : null}
+							</Col>
+							<Col className="recipe-instructions" md={12}>
 								<a href={recipeInformation.sourceUrl}>Click here for recipe instructions</a>
 							</Col>
 						</Row>

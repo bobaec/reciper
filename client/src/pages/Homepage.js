@@ -20,10 +20,6 @@ const Homepage = ({ setAuth, isAuthenticated }) => { //rename
         getIngredients();
     }, [])
 
-    useEffect(() => {
-        console.log('here')
-    }, [ingredients])
-
     const getIngredients = async () => {
         try {
             const response = await fetch('http://localhost:5000/recipes/get-ingredients', {
@@ -44,7 +40,6 @@ const Homepage = ({ setAuth, isAuthenticated }) => { //rename
     }
 
     const saveIngredients = async (allIngredients) => {
-        // setIngredients(allIngredients);
         const filterOwnedIngredients = {
             owned_ingredients: allIngredients.length > 0 ? allIngredients.join(',+') : null
         }

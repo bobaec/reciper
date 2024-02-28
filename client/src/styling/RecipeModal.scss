@@ -12,15 +12,20 @@
     a {
         color: antiquewhite;
     }
-    .number-of-ingredients {
+    .recipe-summary {
+        margin-bottom: 10px;
+    }
+    .owned-ingredients-container, .ingredients-container, .cuisines-container {
         margin: 10px 0;
     }
-    .ingredients-container, .cuisines-container {
+    .ingredients, .cuisines {
         display: flex;
         flex-wrap: wrap;
-        margin-bottom: 10px;
         .used-ingredient, .missed-ingredient, .cuisine {
             @include ingredient-box;
         }
+    }
+    .recipe-instructions {
+        margin: 10px 0;
     }
 }
