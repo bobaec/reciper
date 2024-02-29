@@ -25,7 +25,7 @@ router.post('/save-ingredients', authorization, async (req, res) => {
     }
 });
 
-router.get('/get-recipes', authorization, async (req, res) => {
+router.get('/get-favorite-recipes', authorization, async (req, res) => {
     try {
         const user = await pool.query(
             "SELECT favorite_recipes FROM users WHERE user_id = $1", [req.user]
@@ -60,7 +60,15 @@ router.post('/save-recipe', authorization, async (req, res) => {
                     "UPDATE users SET favorite_recipes = $1 WHERE user_id = $2 RETURNING *", [stringifiedRecipes, req.user]
                 )
             } else {
-                return res.json({ favorite: true })
+                const removeFavoriteRecipe = recipesArray.filter(
+                    (recipe) => recipe !== recipe_id && recipe_id !== ''
+                );
+                const stringifiedRecipes = removeFavoriteRecipe.join(',');
+                const recipe = await pool.query(
+                    "UPDATE users SET favorite_recipes = $1 WHERE user_id = $2 RETURNING *", [stringifiedRecipes, req.user]
+                )
+
+                return res.json({ removed: true })
             }
         }
         return res.json(favoriteRecipes);

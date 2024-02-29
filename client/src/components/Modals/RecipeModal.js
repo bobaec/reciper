@@ -9,7 +9,7 @@ import '../../styling/RecipeModal.scss';
 const RecipeModal = ({ show, setShow, recipe, isAuthenticated }) => {
 	const { image, summary, sourceUrl, title, id, likes, missedIngredients, usedIngredients } = recipe;
 	const [recipeInformation, setRecipeInformation] = useState({});
-
+	const [favoriteRecipeIds, setFavoriteRecipeIds] = useState("");
 	useEffect(() => {
 		const getRecipeInformation = async () => {
 			try {
@@ -21,21 +21,23 @@ const RecipeModal = ({ show, setShow, recipe, isAuthenticated }) => {
 			}
 		}
 		getRecipeInformation();
-	}, [])
+		getFavoriteRecipes();
+	}, [recipe, favoriteRecipeIds])
 
 	const hasIngredients = () => {
 		return missedIngredients?.length > 0 || usedIngredients?.length > 0;
 	}
 
-	const getRecipes = async () => {
+	const getFavoriteRecipes = async () => {
 		try {
-			const response = await fetch('http://localhost:5000/recipes/get-recipes', {
+			const response = await fetch('http://localhost:5000/recipes/get-favorite-recipes', {
 				method: "GET",
 				headers: {
 					"Content-Type": "text/plain",
 					token: localStorage.token
 				}
 			})
+			const parseResponse = await response.json();
 		} catch (error) {
 			console.log('getRecipes', error.message);
 		}
@@ -43,7 +45,7 @@ const RecipeModal = ({ show, setShow, recipe, isAuthenticated }) => {
 
 	const saveRecipe = async (recipe_id) => {
 		try {
-			await fetch("http://localhost:5000/recipes/save-recipe", {
+			const response = await fetch("http://localhost:5000/recipes/save-recipe", {
 				method: "POST",
 				headers: {
 					"Content-Type": "text/plain",
@@ -51,21 +53,13 @@ const RecipeModal = ({ show, setShow, recipe, isAuthenticated }) => {
 				},
 				body: recipe_id,
 			})
+			const parseResponse = await response.json();
 			setShow(false);
 		} catch (error) {
 			console.log('saveRecipe', error.message);
 		}
 	}
 
-	const getNameFromSourceName = (sourceName) => {
-		if (sourceName.includes('/')) {
-			const parts = sourceName.split('/');
-			const replaceCom = parts[0].replace('.com', '');
-			const result = replaceCom.charAt(0).toUpperCase() + replaceCom.slice(1);
-			return result;
-		}
-		return sourceName;
-	}
 	return (
 		<>
 			{recipe?.id ? <Modal className="modal-container" show={show} onHide={() => setShow(false)} size="lg">
@@ -121,7 +115,7 @@ const RecipeModal = ({ show, setShow, recipe, isAuthenticated }) => {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={() => setShow(false)}>Close</Button>
-					{isAuthenticated ? <Button variant="primary" onClick={() => saveRecipe(recipe.id)}>Favorite</Button> : null}
+					{isAuthenticated ? <Button variant={!favoriteRecipeIds?.includes(recipe.id) ? 'primary' : 'danger'} onClick={() => saveRecipe(recipe.id)}>{!favoriteRecipeIds?.includes(recipe.id) ? 'Save' : 'Remove'}</Button> : null}
 				</Modal.Footer>
 			</Modal> : null}
 		</>
