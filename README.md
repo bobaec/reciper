@@ -1,4 +1,4 @@
-What's in your Fridge Web App using PERN (Postgresql, Express, React, NodeJS), React Bootstrap, SASS and JsonWebToken Authorization with BCrypt password hashing
+What's in your Fridge Web App using PERN (Postgresql, Express, React, NodeJS), React Bootstrap, SASS, Spoonacular API, and JsonWebToken Authorization with BCrypt password hashing
 
 ![image](https://github.com/bobaec/reciper/assets/22423987/c444198c-89ce-4711-9fe7-da16ad6350b4)
 
