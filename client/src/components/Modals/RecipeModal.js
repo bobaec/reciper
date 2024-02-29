@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import '../../styling/RecipeModal.scss';
 
-const RecipeModal = ({ show, setShow, recipe }) => {
+const RecipeModal = ({ show, setShow, recipe, isAuthenticated }) => {
 	const { image, summary, sourceUrl, title, id, likes, missedIngredients, usedIngredients } = recipe;
 	const [recipeInformation, setRecipeInformation] = useState({});
 
@@ -25,6 +25,36 @@ const RecipeModal = ({ show, setShow, recipe }) => {
 
 	const hasIngredients = () => {
 		return missedIngredients?.length > 0 || usedIngredients?.length > 0;
+	}
+
+	const getRecipes = async () => {
+		try {
+			const response = await fetch('http://localhost:5000/recipes/get-recipes', {
+				method: "GET",
+				headers: {
+					"Content-Type": "text/plain",
+					token: localStorage.token
+				}
+			})
+		} catch (error) {
+			console.log('getRecipes', error.message);
+		}
+	}
+
+	const saveRecipe = async (recipe_id) => {
+		try {
+			await fetch("http://localhost:5000/recipes/save-recipe", {
+				method: "POST",
+				headers: {
+					"Content-Type": "text/plain",
+					token: localStorage.token,
+				},
+				body: recipe_id,
+			})
+			setShow(false);
+		} catch (error) {
+			console.log('saveRecipe', error.message);
+		}
 	}
 
 	const getNameFromSourceName = (sourceName) => {
@@ -73,25 +103,25 @@ const RecipeModal = ({ show, setShow, recipe }) => {
 									</Col>
 								</Col>
 							</> : null}
-							<Col md={12} className="cuisines-container">
+							{recipeInformation?.dishTypes?.length ? <Col md={12} className="cuisines-container">
 								<Col md={12}>Cuisine Type(s):</Col>
-								{recipeInformation?.dishTypes?.length ? <Col className="cuisines" md={12}>
+								<Col className="cuisines" md={12}>
 									{recipeInformation?.dishTypes.map((cuisine, index) => {
 										return (
 											<div className="cuisine" key={index}>{cuisine}</div>
 										)
 									})}
-								</Col> : null}
-							</Col>
+								</Col>
+							</Col> : null}
 							<Col className="recipe-instructions" md={12}>
-								<a href={recipeInformation.sourceUrl}>Click here for recipe instructions</a>
+								<a href={recipeInformation.sourceUrl} target="_blank" rel="noreferrer">Click here for recipe instructions</a>
 							</Col>
 						</Row>
 					</Container>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={() => setShow(false)}>Close</Button>
-					<Button variant="primary" onClick={() => setShow(false)}>Favorite</Button>
+					{isAuthenticated ? <Button variant="primary" onClick={() => saveRecipe(recipe.id)}>Favorite</Button> : null}
 				</Modal.Footer>
 			</Modal> : null}
 		</>

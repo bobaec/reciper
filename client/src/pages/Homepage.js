@@ -4,6 +4,7 @@ import Content from "../components/Content";
 import "../styling/Homepage.scss";
 import LoginModal from "../components/Modals/LoginModal";
 import LogoutModal from "../components/Modals/LogoutModal";
+import RegisterModal from '../components/Modals/RegisterModal';
 
 const Homepage = ({ setAuth, isAuthenticated }) => { //rename
     const [ingredients, setIngredients] = useState([]);
@@ -11,6 +12,7 @@ const Homepage = ({ setAuth, isAuthenticated }) => { //rename
     const [authenticated, setAuthenticated] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
 
     useEffect(() => {
         setAuthenticated(isAuthenticated);
@@ -30,10 +32,9 @@ const Homepage = ({ setAuth, isAuthenticated }) => { //rename
             });
             const parseResponse = await response.json();
             if (parseResponse.owned_ingredients) {
-                const splitIngredients = await parseResponse.owned_ingredients.split(',+');
+                const splitIngredients = await parseResponse.owned_ingredients.split(',');
                 setIngredients(splitIngredients);
             }
-
         } catch (error) {
             console.log('getIngredients', error.message);
         }
@@ -41,7 +42,7 @@ const Homepage = ({ setAuth, isAuthenticated }) => { //rename
 
     const saveIngredients = async (allIngredients) => {
         const filterOwnedIngredients = {
-            owned_ingredients: allIngredients.length > 0 ? allIngredients.join(',+') : null
+            owned_ingredients: allIngredients.length > 0 ? allIngredients.join(',') : null
         }
         setOwnedIngredients(filterOwnedIngredients);
         try {
@@ -72,10 +73,12 @@ const Homepage = ({ setAuth, isAuthenticated }) => { //rename
                 isAuthenticated={authenticated}
                 setShowLoginModal={(e) => setShowLoginModal(e)}
                 setShowLogoutModal={(e) => setShowLogoutModal(e)}
+                setShowRegisterModal={(e) => setShowRegisterModal(e)}
             />
-            <Content ingredients={ingredients} />
-            {showLoginModal ? <LoginModal show={showLoginModal} setAuth={setAuth} setShowLoginModal={(e) => setShowLoginModal(e)} /> : null}
+            <Content ingredients={ingredients} isAuthenticated={isAuthenticated} />
+            {showLoginModal ? <LoginModal show={showLoginModal} setAuth={setAuth} setShowLoginModal={(e) => setShowLoginModal(e)} setShowRegisterModal={(e) => setShowRegisterModal(e)} /> : null}
             {showLogoutModal ? <LogoutModal show={showLogoutModal} setAuth={setAuth} setShowLogoutModal={(e) => setShowLogoutModal(e)} /> : null}
+            {showRegisterModal ? <RegisterModal show={showRegisterModal} setAuth={setAuth} setShowRegisterModal={(e) => setShowRegisterModal(e)} /> : null}
         </div>
     );
 };

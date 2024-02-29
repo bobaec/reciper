@@ -9,7 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import RecipeModal from "./Modals/RecipeModal";
 
-const Recipes = ({ recipes, ingredients }) => {
+const Recipes = ({ recipes, ingredients, isAuthenticated }) => {
     const [show, setShow] = useState(false);
     const [currentRecipe, setCurrentRecipe] = useState({});
     const openRecipeModal = (recipe) => {
@@ -32,9 +32,6 @@ const Recipes = ({ recipes, ingredients }) => {
                             <div className="recipe-info-container">
                                 <div className="recipe-title-and-where">
                                     <a href={sourceUrl}>{title.replace(/\b\w/g, (char) => char.toUpperCase())}</a>
-                                    {/* <div className="recipe-name">{getNameFromSourceName(recipe.sourceName)}</div>
-                                    <div className="recipe-servings">{recipe.servings} servings</div>
-                                    <div className="recipe-time">{recipe.readyInMinutes} mins</div> */}
                                 </div>
                                 <div className="recipe-icon-container">
                                     {ingredients?.length ? <div className="recipe-used-ingredients">
@@ -52,7 +49,7 @@ const Recipes = ({ recipes, ingredients }) => {
                     );
                 }) : <div>No recipes found.</div>}
             </div>
-            {currentRecipe?.id ? <RecipeModal show={show} setShow={setShow} recipe={currentRecipe} /> : null}
+            {currentRecipe?.id ? <RecipeModal show={show} setShow={setShow} recipe={currentRecipe} isAuthenticated={isAuthenticated} /> : null}
         </div>
     );
 };

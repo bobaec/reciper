@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 
-const LoginModal = ({ show, setShowLoginModal, setAuth }) => {
+const LoginModal = ({ show, setShowLoginModal, setAuth, setShowRegisterModal }) => {
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
@@ -44,44 +44,45 @@ const LoginModal = ({ show, setShowLoginModal, setAuth }) => {
         }
     };
     return (
-        <>
-            <Modal size="lg" show={show} onHide={() => setShowLoginModal(false)}>
-                <Modal.Header closeButton>Login</Modal.Header>
-                <Modal.Body>
-                    <Container>
-                        <Row>
-                            <Col>
-                                <form
-                                    onSubmit={onSubmitForm}
-                                >
-                                    <input
-                                        className="form-control my-3"
-                                        type="email"
-                                        name="email"
-                                        placeholder="email"
-                                        value={email}
-                                        onChange={(e) => onFormChange(e)}
-                                    />
-                                    <input
-                                        className="form-control my-3"
-                                        type="password"
-                                        name="password"
-                                        placeholder="password"
-                                        value={password}
-                                        onChange={(e) => onFormChange(e)}
-                                    />
-                                    <button type="btn btn-success btn-block">Login</button>
-                                    <Link to="/register">Register</Link>
-                                </form>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowLoginModal(false)}>Close</Button>
-                </Modal.Footer>
-            </Modal>
-        </>
+        <Modal size="md" show={show} onHide={() => setShowLoginModal(false)}>
+            <Modal.Header closeButton>Login</Modal.Header>
+            <Modal.Body>
+                <Container>
+                    <Row>
+                        <Col>
+                            <form
+                                onSubmit={onSubmitForm}
+                            >
+                                <input
+                                    className="form-control my-3"
+                                    type="email"
+                                    name="email"
+                                    placeholder="email"
+                                    value={email}
+                                    onChange={(e) => onFormChange(e)}
+                                />
+                                <input
+                                    className="form-control my-3"
+                                    type="password"
+                                    name="password"
+                                    placeholder="password"
+                                    value={password}
+                                    onChange={(e) => onFormChange(e)}
+                                />
+                                <Button className="form-control mb-3" type="btn btn-success btn-block">Login</Button>
+                                <Button className="form-control" type="btn btn-success" onClick={() => {
+                                    setShowLoginModal(false);
+                                    setShowRegisterModal(true);
+                                }}>Register</Button>
+                            </form>
+                        </Col>
+                    </Row>
+                </Container>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowLoginModal(false)}>Close</Button>
+            </Modal.Footer>
+        </Modal>
     );
 };
 

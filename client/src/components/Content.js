@@ -2,17 +2,13 @@ import React, { useState, useEffect } from "react";
 import "../styling/Content.scss";
 import Recipes from "./Recipes";
 
-const Content = ({ ingredients }) => {
+const Content = ({ ingredients, isAuthenticated }) => {
     const [recipes, setRecipes] = useState([]);
-    console.log(ingredients);
-    useEffect(() => {
-        console.log('a')
-    }, [ingredients])
 
     useEffect(() => {
         const getRecipesByIngredients = setTimeout(async () => {
             if (ingredients.length > 0) {
-                const stringifyIngredients = ingredients.join(",+");
+                const stringifyIngredients = ingredients.join(",");
                 try {
                     const response = await fetch(
                         `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&ingredients=${stringifyIngredients}`
@@ -44,7 +40,7 @@ const Content = ({ ingredients }) => {
     return (
         <div className="content-container">
             <div className="content-title">Recipes</div>
-            {recipes.length ? <Recipes recipes={recipes} ingredients={ingredients} /> : null}
+            {recipes.length ? <Recipes recipes={recipes} ingredients={ingredients} isAuthenticated={isAuthenticated} /> : null}
         </div>
     );
 };

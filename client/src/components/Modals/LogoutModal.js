@@ -14,7 +14,7 @@ const LogoutModal = ({ show, setShowLogoutModal, setAuth }) => {
             <Modal.Header closeButton>Logout</Modal.Header>
             <Modal.Body>Are you sure you want to log out?</Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => setShowLogoutModal(false)}>Close</Button>
+                <Button variant="secondary" onClick={() => setShowLogoutModal(false)}>Close</Button>
                 <Button onClick={() => logout()}>Logout</Button>
             </Modal.Footer>
         </Modal>

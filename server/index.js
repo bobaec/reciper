@@ -4,12 +4,10 @@ const cors = require('cors');
 
 // middleware
 app.use(express.json()); // req.body;
+app.use(express.text());
 app.use(cors());
 
 // routes
-
-// register and login routes
-
 app.use("/auth", require("./routes/jwtAuth"));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/recipes', require('./routes/recipes'));
